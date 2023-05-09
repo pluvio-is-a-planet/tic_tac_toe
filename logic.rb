@@ -22,9 +22,7 @@ module TicTacToe
   end
 
   def swap_turn
-    temp = current_turn
-    self.current_turn = last_turn
-    self.last_turn = temp
+    self.current_turn, self.last_turn = last_turn, current_turn
   end
 
   def position
@@ -37,7 +35,6 @@ module TicTacToe
   end
 
   def check_win
-    # set to false if any of the conditions in brackets return true
     if win?
       self.game_is_active = false
       puts "Player '#{current_turn}' wins!"
@@ -46,41 +43,30 @@ module TicTacToe
       puts 'The game resulted in a tie!'
     end
 
-    prompt_to_play if game_is_active == false
+    prompt_to_play unless game_is_active
   end
+
+  private
 
   def win?
     check_horizontal || check_vertical || check_diagonal
   end
 
   def tie?
-    board.all? { |row| row.all? { |pos| pos != '-' } }
+    board.all? { |row| row.none?('-') }
   end
 
   def check_horizontal
-    board.any? do |row|
-      row.all? { |pos| %w[X O].include?(pos) && pos == row[0] }
-    end
+    board.any? { |row| row.uniq.size == 1 && %w[X O].include?(row[0]) }
   end
 
   def check_vertical
-    3.times do |col|
-      col_match = (0..2).map { |row| board[row][col] }
-      return true if col_match.all? { |pos| %w[X O].include?(pos) && pos == col_match[0] }
-    end
-
-    false
+    (0..2).any? { |col| (0..2).all? { |row| board[row][col] == board[0][col] && %w[X O].include?(board[row][col]) } }
   end
 
   def check_diagonal
-    [top_to_bot, bot_to_top].any? { |row| row.all? { |pos| %w[X O].include?(pos) && pos == row[0] } }
-  end
-
-  def top_to_bot
-    (0..2).map { |col| board[col][col] }
-  end
-
-  def bot_to_top
-    (0..2).map { |col| board[2 - col][col] }
+    top_to_bot = (0..2).map { |col| board[col][col] }
+    bot_to_top = (0..2).map { |col| board[2 - col][col] }
+    [top_to_bot, bot_to_top].any? { |row| row.uniq.size == 1 && %w[X O].include?(row[0]) }
   end
 end
