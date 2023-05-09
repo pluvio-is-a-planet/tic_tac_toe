@@ -28,18 +28,22 @@ class GameBoard
     @last_turn = (current_turn == "X") ? "O" : "X"
 
     print_board
+    play_game
   end
 
   def print_board
-    puts "   123"
+    puts "\n   1 2 3"
     board.each_with_index do |row, index|
-      str = "#{(index + 65).chr}: "
-      row.each { |col| str += col}
-      puts str
+      row_str = "#{(index + 65).chr}: " # Get the alphabetical representation of the index
+      row_pos_str = ""
+      row.each { |col| row_pos_str += col}
+      row_pos_str = row_pos_str.split("").join(" ") # Add a space between all the available positions
+      puts row_str += row_pos_str
     end
   end
 
-  def play
+  def play_turn
+    puts "\nCurrent turn: #{current_turn}"
     puts "Enter position to make your move (Eg. 'a2')>>"
 
     position = gets.chomp
@@ -58,5 +62,11 @@ class GameBoard
       puts "You cannot play here, position already taken."
     end
 
+  end
+
+  def play_game
+    while game_is_active
+      play_turn
+    end
   end
 end
