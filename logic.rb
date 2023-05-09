@@ -13,7 +13,7 @@ module TicTacToe
       check_win
       swap_turn
     else
-      puts 'Invalid move, position already taken or does not exist.'
+      puts 'Invalid move, position already taken or does not exist. Make sure you used the right format.'
     end
   end
 
