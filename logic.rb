@@ -1,32 +1,4 @@
-class GameBoard
-  attr_accessor :board, :game_is_active, :current_turn, :last_turn
-
-  def initialize
-    @board = Array.new(3) { Array.new(3, "-") }
-    @game_is_active = true
-
-    puts "Which player starts first? 'X' or 'O'"
-    starting_turn = gets.chomp.upcase
-    @current_turn = starting_turn
-    @last_turn = (current_turn == "X") ? "O" : "X"
-
-    print_board
-    play_game
-  end
-
-  private
-
-  def print_board
-    puts "\n   1 2 3"
-    board.each_with_index do |row, index|
-      row_str = "#{(index + 65).chr}: " # Get the alphabetical representation of the index
-      row_pos_str = ""
-      row.each { |col| row_pos_str += col}
-      row_pos_str = row_pos_str.split("").join(" ") # Add a space between all the available positions
-      puts row_str += row_pos_str
-    end
-  end
-
+module TicTacToe
   def play_turn
     puts "\nCurrent turn: #{current_turn}"
     puts "Enter position to make your move (Eg. 'a2')>>"
