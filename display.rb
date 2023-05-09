@@ -22,4 +22,15 @@ module Display
     board[row][col] = current_turn
     print_board
   end
+
+  def prompt_to_play
+    puts 'Would you like to play a game of Tic-Tac-Toe? (y/n)>>'
+    user_yes_no = gets.chomp.downcase
+
+    if user_yes_no == 'y'
+      Board.new
+    else
+      puts 'Have a nice day!'
+    end
+  end
 end
