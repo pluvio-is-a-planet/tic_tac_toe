@@ -28,7 +28,7 @@ module Display
     user_yes_no = gets.chomp.downcase
 
     if user_yes_no == 'y'
-      Board.new
+      start_game
     else
       puts 'Thank you for playing!'
     end
