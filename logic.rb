@@ -45,6 +45,8 @@ module TicTacToe
       self.game_is_active = false
       puts 'The game resulted in a tie!'
     end
+
+    prompt_to_play if game_is_active == false
   end
 
   def check_horizontal
