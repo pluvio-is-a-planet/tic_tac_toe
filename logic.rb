@@ -1,7 +1,7 @@
 module TicTacToe
   def play_turn
     puts "\nCurrent turn: #{current_turn}"
-    puts "Enter position to make your move (Eg. 'a2')>>"
+    puts 'Enter position to make your move (Eg. 'a2')>>'
 
     position = gets.chomp
     row_pos = position[0].upcase.ord - 65
@@ -16,7 +16,7 @@ module TicTacToe
       self.current_turn = temp
       check_win
     else
-      puts "You cannot play here, position already taken."
+      puts 'You cannot play here, position already taken.'
     end
 
   end
@@ -40,7 +40,7 @@ module TicTacToe
 
   def check_horizontal
     board.any? do |row|
-      row.all? { |pos| pos == "X" } || row.all? { |pos| pos == "O" }
+      row.all? { |pos| pos == 'X' } || row.all? { |pos| pos == 'O' }
     end
   end
 
@@ -53,7 +53,7 @@ module TicTacToe
         col_match.push(board[row][col])
       end
 
-      if col_match.all? { |pos| pos == "X" } || col_match.all? { |pos| pos == "O" }
+      if col_match.all? { |pos| pos == 'X' } || col_match.all? { |pos| pos == 'O' }
         result = true
         break
       end
@@ -74,8 +74,8 @@ module TicTacToe
       reverse_index -= 1
     end
 
-    result = (top_to_bot.all? { |pos| pos == "X" } || top_to_bot.all? { |pos| pos == "O" }) ||
-    (bot_to_top.all? { |pos| pos == "X" } || bot_to_top.all? { |pos| pos == "O" })
+    result = (top_to_bot.all? { |pos| pos == 'X' } || top_to_bot.all? { |pos| pos == 'O' }) ||
+    (bot_to_top.all? { |pos| pos == 'X' } || bot_to_top.all? { |pos| pos == 'O' })
 
     result
   end
