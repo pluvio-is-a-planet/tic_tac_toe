@@ -31,6 +31,8 @@ class GameBoard
     play_game
   end
 
+  private
+
   def print_board
     puts "\n   1 2 3"
     board.each_with_index do |row, index|
@@ -57,7 +59,7 @@ class GameBoard
       temp = self.last_turn
       self.last_turn = self.current_turn
       self.current_turn = temp
-      # check_win
+      check_win
     else
       puts "You cannot play here, position already taken."
     end
@@ -68,5 +70,54 @@ class GameBoard
     while game_is_active
       play_turn
     end
+
+    puts "Player '#{last_turn}' wins!"
+  end
+
+  def check_win
+    # set to false if any of the conditions in brackets return true
+    self.game_is_active = !(self.check_horizontal || self.check_vertical || self.check_diagonal)
+  end
+
+  def check_horizontal
+    board.any? do |row|
+      row.all? { |pos| pos == "X" } || row.all? { |pos| pos == "O" }
+    end
+  end
+
+  def check_vertical
+    for col in 0..2 do
+      result = false
+      col_match = Array.new()
+
+      for row in 0..2 do
+        col_match.push(board[row][col])
+      end
+
+      if col_match.all? { |pos| pos == "X" } || col_match.all? { |pos| pos == "O" }
+        result = true
+        break
+      end
+
+    end
+
+    result
+  end
+
+  def check_diagonal
+    top_to_bot = Array.new()
+    bot_to_top = Array.new()
+
+    reverse_index = 2
+    for col in 0..2 do
+      top_to_bot.push(board[col][col])
+      bot_to_top.push(board[reverse_index][col])
+      reverse_index -= 1
+    end
+
+    result = (top_to_bot.all? { |pos| pos == "X" } || top_to_bot.all? { |pos| pos == "O" }) ||
+    (bot_to_top.all? { |pos| pos == "X" } || bot_to_top.all? { |pos| pos == "O" })
+
+    result
   end
 end
