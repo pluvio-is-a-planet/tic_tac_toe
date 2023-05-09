@@ -20,6 +20,15 @@ class GameBoard
 
   def initialize
     @board = Array.new(3, Array.new(3, "-"))
-    # print_board
+    print_board
+  end
+
+  def print_board
+    puts "   123"
+    board.each_with_index do |row, index|
+      str = String.new("#{(index + 65).chr}: ")
+      row.each { |col| str += col}
+      puts str
+    end
   end
 end
