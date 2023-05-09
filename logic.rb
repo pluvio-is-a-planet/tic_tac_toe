@@ -38,15 +38,23 @@ module TicTacToe
 
   def check_win
     # set to false if any of the conditions in brackets return true
-    if check_horizontal || check_vertical || check_diagonal
+    if win?
       self.game_is_active = false
       puts "Player '#{current_turn}' wins!"
-    elsif board.all? { |row| row.all? { |pos| pos != '-' } }
+    elsif tie?
       self.game_is_active = false
       puts 'The game resulted in a tie!'
     end
 
     prompt_to_play if game_is_active == false
+  end
+
+  def win?
+    check_horizontal || check_vertical || check_diagonal
+  end
+
+  def tie?
+    board.all? { |row| row.all? { |pos| pos != '-' } }
   end
 
   def check_horizontal
