@@ -19,6 +19,5 @@ class Board
     @last_turn = current_turn == 'X' ? 'O' : 'X'
 
     print_board
-    play_game
   end
 end
