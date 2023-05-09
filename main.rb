@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'board.rb'
-require_relative 'logic.rb'
-require_relative 'display.rb'
+require_relative 'board'
+require_relative 'logic'
+require_relative 'display'
 
 def start_game
   game = Board.new

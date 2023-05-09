@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require_relative 'display.rb'
+require_relative 'display'
 
 module TicTacToe
   def play_turn

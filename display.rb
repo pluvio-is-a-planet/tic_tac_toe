@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require_relative 'logic.rb'
+require_relative 'logic'
 require 'io/console'
 
 module Display

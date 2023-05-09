@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
-require_relative 'display.rb'
-require_relative 'logic.rb'
+require_relative 'display'
+require_relative 'logic'
 
 class Board
   attr_accessor :board, :game_is_active, :current_turn, :last_turn
