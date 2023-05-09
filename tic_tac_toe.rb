@@ -70,13 +70,17 @@ class GameBoard
     while game_is_active
       play_turn
     end
-
-    puts "Player '#{last_turn}' wins!"
   end
 
   def check_win
     # set to false if any of the conditions in brackets return true
-    self.game_is_active = !(self.check_horizontal || self.check_vertical || self.check_diagonal)
+    if self.check_horizontal || self.check_vertical || self.check_diagonal
+      self.game_is_active = false
+      puts "Player '#{last_turn}' wins!"
+    elsif board.all? { |row| row.all? { |pos| pos != "-"}}
+      self.game_is_active = false
+      puts 'The game resulted in a tie!'
+    end
   end
 
   def check_horizontal
