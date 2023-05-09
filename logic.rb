@@ -1,38 +1,47 @@
+# frozen_string_literal: false
+
+require './display'
+
 module TicTacToe
   def play_turn
-    puts "\nCurrent turn: #{current_turn}"
-    puts 'Enter position to make your move (Eg. 'a2')>>'
+    input_position = position
+    row_pos = input_position[0].upcase.ord - 65
+    col_pos = input_position[1].to_i - 1
 
-    position = gets.chomp
-    row_pos = position[0].upcase.ord - 65
-    col_pos = position[1].to_i - 1
-
-    if board[row_pos][col_pos] == "-"
-      board[row_pos][col_pos] = current_turn
-      print_board
-
-      temp = self.last_turn
-      self.last_turn = self.current_turn
-      self.current_turn = temp
+    if valid_move?(row_pos, col_pos)
+      update_board(row_pos, col_pos)
       check_win
+      swap_turn
     else
-      puts 'You cannot play here, position already taken.'
+      puts 'Invalid move, position already taken or does not exist.'
     end
+  end
 
+  def valid_move?(row, col)
+    board.dig(row, col) && board[row][col] == '-'
+  end
+
+  def swap_turn
+    temp = current_turn
+    self.current_turn = last_turn
+    self.last_turn = temp
+  end
+
+  def position
+    puts "\nCurrent turn: #{current_turn}\nEnter position to make your move (Eg. 'a2')>>"
+    gets.chomp
   end
 
   def play_game
-    while game_is_active
-      play_turn
-    end
+    play_turn while game_is_active
   end
 
   def check_win
     # set to false if any of the conditions in brackets return true
-    if self.check_horizontal || self.check_vertical || self.check_diagonal
+    if check_horizontal || check_vertical || check_diagonal
       self.game_is_active = false
-      puts "Player '#{last_turn}' wins!"
-    elsif board.all? { |row| row.all? { |pos| pos != "-"}}
+      puts "Player '#{current_turn}' wins!"
+    elsif board.all? { |row| row.all? { |pos| pos != '-' } }
       self.game_is_active = false
       puts 'The game resulted in a tie!'
     end
@@ -40,43 +49,28 @@ module TicTacToe
 
   def check_horizontal
     board.any? do |row|
-      row.all? { |pos| pos == 'X' } || row.all? { |pos| pos == 'O' }
+      row.all? { |pos| %w[X O].include?(pos) && pos == row[0] }
     end
   end
 
   def check_vertical
-    for col in 0..2 do
-      result = false
-      col_match = Array.new()
-
-      for row in 0..2 do
-        col_match.push(board[row][col])
-      end
-
-      if col_match.all? { |pos| pos == 'X' } || col_match.all? { |pos| pos == 'O' }
-        result = true
-        break
-      end
-
+    3.times do |col|
+      col_match = (0..2).map { |row| board[row][col] }
+      return true if col_match.all? { |pos| %w[X O].include?(pos) && pos == col_match[0] }
     end
 
-    result
+    false
   end
 
   def check_diagonal
-    top_to_bot = Array.new()
-    bot_to_top = Array.new()
+    [top_to_bot, bot_to_top].any? { |row| row.all? { |pos| %w[X O].include?(pos) && pos == row[0] } }
+  end
 
-    reverse_index = 2
-    for col in 0..2 do
-      top_to_bot.push(board[col][col])
-      bot_to_top.push(board[reverse_index][col])
-      reverse_index -= 1
-    end
+  def top_to_bot
+    (0..2).map { |col| board[col][col] }
+  end
 
-    result = (top_to_bot.all? { |pos| pos == 'X' } || top_to_bot.all? { |pos| pos == 'O' }) ||
-    (bot_to_top.all? { |pos| pos == 'X' } || bot_to_top.all? { |pos| pos == 'O' })
-
-    result
+  def bot_to_top
+    (0..2).map { |col| board[2 - col][col] }
   end
 end
