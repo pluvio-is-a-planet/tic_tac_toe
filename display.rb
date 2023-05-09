@@ -24,13 +24,13 @@ module Display
   end
 
   def prompt_to_play
-    puts 'Would you like to play a game of Tic-Tac-Toe? (y/n)>>'
+    puts 'Would you like to play another game of Tic-Tac-Toe? (y/n)>>'
     user_yes_no = gets.chomp.downcase
 
     if user_yes_no == 'y'
       Board.new
     else
-      puts 'Have a nice day!'
+      puts 'Thank you for playing!'
     end
   end
 end
