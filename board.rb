@@ -2,6 +2,7 @@
 
 require_relative 'display'
 
+# Class representing a Tic-Tac-Toe board
 class Board
   attr_accessor :board, :game_is_active, :current_turn, :last_turn
 

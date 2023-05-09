@@ -2,6 +2,7 @@
 
 require_relative 'display'
 
+# Module implementing all necesary logic for the Tic-Tac-Toe game
 module TicTacToe
   def play_turn
     input_position = position
@@ -17,23 +18,28 @@ module TicTacToe
     end
   end
 
+  # Check validity of the position enter in the position method
   def valid_move?(row, col)
     board.dig(row, col) && board[row][col] == '-'
   end
 
+  # Changes turns
   def swap_turn
     self.current_turn, self.last_turn = last_turn, current_turn
   end
 
+  # Prompts user to enter their move position
   def position
     puts "\nCurrent turn: #{current_turn}\nEnter position to make your move (Eg. 'a2')>>"
     gets.chomp
   end
 
+  # Plays the game until it's no longer active, which is set by the check_win method
   def play_game
     play_turn while game_is_active
   end
 
+  # Checks for a win-or-tie-condition
   def check_win
     if win?
       self.game_is_active = false

@@ -3,9 +3,11 @@
 require_relative 'logic'
 require 'io/console'
 
+# Module responsible for displaying the Tic-Tac-Toe game board and handling user prompts.
 module Display
   include TicTacToe
 
+  # Prints the current state of the game board.
   def print_board
     $stdout.clear_screen
     puts "\n   1 2 3"
@@ -18,11 +20,13 @@ module Display
     end
   end
 
+  # Updates the game board with the current player's move and prints the updated board.
   def update_board(row, col)
     board[row][col] = current_turn
     print_board
   end
 
+  # Prompts the player to choose whether to play another game or quit.
   def prompt_to_play
     puts 'Would you like to play another game of Tic-Tac-Toe? (y/n)>>'
     user_yes_no = gets.chomp.downcase
